@@ -11,6 +11,18 @@ var certificate = fs.readFileSync('cert/server.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+      res.send(200);
+    }
+    else {
+      next();
+    }
+});
+
 /**
  *
  * Path to the moovcheckout research
@@ -75,11 +87,10 @@ fs.readFile(widgetListFile, function (err, data) {
   }
 });
 
-app.use("/template", express.static(__dirname + '/template'));
+app.use("/ux", express.static(__dirname + '/ux'));
 app.use('/widgets', serveIndex('widgets', {'icons': true}));
 app.use("/widgets", express.static(__dirname + '/widgets'));
 app.use("/js", express.static(__dirname + '/js'));
-app.use("/css", express.static(__dirname + '/css'));
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);

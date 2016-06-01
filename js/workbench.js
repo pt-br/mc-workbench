@@ -6,6 +6,18 @@ setTimeout(function() {
 }, 2000);
 
 function initialize() {
+
+  // var xhr = new XMLHttpRequest();
+  // xhr.open("GET", "https://localhost:8443/widgets/", true);
+  // xhr.onreadystatechange = function() {
+  //   if (xhr.readyState == 4) {
+  //     // JSON.parse does not evaluate the attacker's scripts.
+  //     var resp = JSON.stringify(xhr.responseText);
+  //     console.log(resp);
+  //   }
+  // }
+  // xhr.send();
+
   mcIframe = document.querySelector('#mc-created-iframe');
   originalBody = document.querySelector('#mc-original-body');
 
@@ -16,7 +28,6 @@ function initialize() {
 
   addBodyListener();
   injectWorkbench();
-  //disableActions();
 }
 
 function addBodyListener() {
@@ -74,9 +85,23 @@ function disableActions() {
   });
 }
 
+function getUx() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://localhost:8443/ux/workbench.html', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var response = xhr.responseText.trim();
+      workbench.innerHTML = response;
+    }
+  }
+  xhr.send();
+}
+
 function injectWorkbench() {
+
+  // Get UX
+  getUx();
   workbench.id = 'mc-workbench-container';
-  workbench.innerHTML = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css"> <div id="mc-workbench-body"> <div id="mc-workbench-title">MoovCheckout Workbench <span id="mc-workbench-menu-toggle" onclick="toggleMenu()"> Hide/Show menu</span> </div> <ul id="mc-workbench-menu" class="active"> <li onclick="location.reload()"> Reload <span class="menuTip">Reloads the page</span> </li> <li onclick="toggleMCIframe()">Toggle MC iFrame <span class="menuTip">Hide/Show MC iFrame</span> </li> <li onclick="disableActions()">Disable Actions <span class="menuTip">Disable anchors, buttons and inputs</span> </li> <li onclick="">Map Widget <span class="menuTip">Map a new widget</span> </li> <li onclick="">Export Widget <span class="menuTip">Exports current widget</span> </li> </ul> </div> ';
   body.appendChild(workbench);
 }
 
