@@ -144,10 +144,20 @@ function buildWidgetList() {
   }
 }
 
+function destroyWidgetList() {
+  var widgetList = document.querySelector('#mc-workbench-widgetlist');
+  widgetList.innerHTML = '';
+}
+
 function startMapping() {
   var widgetSection = document.querySelector('#mc-workbench-widgetsection');
-  
-  buildWidgetList();
+  if( widgetSection.className.match(/^active/) ) {
+    widgetSection.className = 'inactive';
+    destroyWidgetList();
+  } else {
+    widgetSection.className = 'active';
+    buildWidgetList();
+  }
 }
 
 function injectWorkbench() {

@@ -5,7 +5,7 @@
   height: inherit;
   top: 0;
   right: 0;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 #mc-workbench-container, #mc-workbench-body {
   background: #fff;
@@ -45,6 +45,9 @@
 #mc-workbench-menu .menuTip {
   display: block;
   font-size: 14px;
+}
+#mc-workbench-widgetsection.inactive {
+  display: none;
 }
 #mc-workbench-widgettitle {
   color: #435058;

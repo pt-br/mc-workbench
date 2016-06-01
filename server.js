@@ -82,7 +82,6 @@ fs.readFile(widgetListFile, function (err, data) {
       });
 
       writeWidget(widgetName, widgetTemplate);
-      writeWidget('c' + widgetName, widgetTemplate);
     });
   }
 });
