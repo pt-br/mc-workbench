@@ -1,5 +1,6 @@
 var body = document.body;
 workbench = document.createElement('div');
+widgets = [];
 
 setTimeout(function() {
   initialize();
@@ -37,6 +38,13 @@ function addBodyListener() {
       processSelector(cssPath);
   });
 }
+
+// function addWidgetListener() {
+//   var widget = document.querySelector('.widget');
+//   widget.addEventListener('mousedown', function(e) {
+//       console.log("OIIIII");
+//   });
+// }
 
 function toggleMCIframe() {
   if( mcIframe.className.match(/^active/) ) {
@@ -97,7 +105,55 @@ function getUx() {
   xhr.send();
 }
 
+function getWidgetNames() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://localhost:8443/widgets', true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var response = xhr.responseText.trim();
+      var regex = /name\"\>(.*?)\<\/span\>/g;
+      var response = response.match(regex);
+
+      var responseIndex = response.length;
+
+      for( var i = 0; i < responseIndex; i++ ) {
+        var match = regex.exec(response);
+        widgets.push(match[1]);
+      }
+    }
+  }
+  xhr.send();
+}
+
+function openWidget() {
+  console.log('oi');
+}
+
+function buildWidgetList() {
+  var widgetList = document.querySelector('#mc-workbench-widgetlist');
+  var widgetIndex = widgets.length;
+  for( var i = 0; i < widgetIndex; i++ ) {
+    var widgetFile = widgets[i];
+    var widgetName = widgets[i].replace(/\.txt/, '');
+    var widgetElement = document.createElement('li');
+    widgetElement.className = 'widget';
+    widgetElement.setAttribute('data-file', widgetFile);
+    widgetElement.setAttribute('onclick', 'openWidget()');
+    widgetElement.innerHTML = widgetName;
+    widgetList.appendChild(widgetElement);
+  }
+}
+
+function startMapping() {
+  var widgetSection = document.querySelector('#mc-workbench-widgetsection');
+  
+  buildWidgetList();
+}
+
 function injectWorkbench() {
+
+  // Get widget names
+  getWidgetNames();
 
   // Get UX
   getUx();
