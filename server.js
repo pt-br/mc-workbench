@@ -44,7 +44,7 @@ if (!fs.existsSync(outputPath)){
 var widgetListFile = path.join(widgetListBasePath, 'catalyst-developer-docs/site-tagging/widget-list.md');
 
 var writeWidget = function (widgetName, widgetTemplate) {
-  var widgetOutputName = widgetName.toLowerCase() + '.txt';
+  var widgetOutputName = widgetName.toLowerCase() + '.json';
   var widgetOutputContent = widgetTemplate;
   var widgetOutputPath = outputPath + widgetOutputName;
 

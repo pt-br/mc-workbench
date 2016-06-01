@@ -39,13 +39,6 @@ function addBodyListener() {
   });
 }
 
-// function addWidgetListener() {
-//   var widget = document.querySelector('.widget');
-//   widget.addEventListener('mousedown', function(e) {
-//       console.log("OIIIII");
-//   });
-// }
-
 function toggleMCIframe() {
   if( mcIframe.className.match(/^active/) ) {
     mcIframe.className = 'inactive';
@@ -125,32 +118,79 @@ function getWidgetNames() {
   xhr.send();
 }
 
-function openWidget() {
-  console.log('oi');
+function getWidgetTemplate(widgetFile) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://localhost:8443/widgets/' + widgetFile, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4) {
+      var widgetResult = JSON.stringify(xhr.responseText.trim());
+      buildWidgetFields(widgetResult);
+    }
+  }
+  xhr.send();
+}
+
+function buildWidgetFields(widgetResult) {
+  var widgetTemplate = widgetResult.match(/selectors\:\s\{(.*)\}\,/g)[0];
+  console.log(widgetTemplate);
+  // Process selectors
+  var widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
+  widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
+  widgetSelectors = widgetSelectors.replace(/\\n\s*/g, '');
+  widgetSelectors = widgetSelectors.match(/(\w*?)\:/g, '');
+
+  [].forEach.call(widgetSelectors, function(currentSelector, currentIndex) {
+    currentSelector = currentSelector.replace(/\:/, '');
+    widgetSelectors[currentIndex] = currentSelector;
+  });
+  console.log(widgetSelectors);
+
+  // Process settings
+  var widgetSettings = widgetSelectors.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
+  console.log(widgetSettings);
+}
+
+function startWidgetEditor() {
+  var widgetElement = event.target;
+  var widgetName = event.target.innerHTML;
+  var widgetFile = event.target.getAttribute('data-file');
+  var widgetEditorTitle = document.querySelector('#mc-workbench-widget-name');
+  var widgetSection = document.querySelector('#mc-workbench-widget-section');
+  var widgeEditor = document.querySelector('#mc-workbench-widget-editor');
+
+  widgetSection.className = 'inactive';
+  destroyWidgetList();
+  widgeEditor.className = 'active';
+
+  widgetEditorTitle.innerHTML = widgetName;
+
+  getWidgetTemplate(widgetFile);
+
+
 }
 
 function buildWidgetList() {
-  var widgetList = document.querySelector('#mc-workbench-widgetlist');
+  var widgetList = document.querySelector('#mc-workbench-widget-list');
   var widgetIndex = widgets.length;
   for( var i = 0; i < widgetIndex; i++ ) {
     var widgetFile = widgets[i];
-    var widgetName = widgets[i].replace(/\.txt/, '');
+    var widgetName = widgets[i].replace(/(\.txt|\.json)/, '');
     var widgetElement = document.createElement('li');
     widgetElement.className = 'widget';
     widgetElement.setAttribute('data-file', widgetFile);
-    widgetElement.setAttribute('onclick', 'openWidget()');
+    widgetElement.setAttribute('onclick', 'startWidgetEditor()');
     widgetElement.innerHTML = widgetName;
     widgetList.appendChild(widgetElement);
   }
 }
 
 function destroyWidgetList() {
-  var widgetList = document.querySelector('#mc-workbench-widgetlist');
+  var widgetList = document.querySelector('#mc-workbench-widget-list');
   widgetList.innerHTML = '';
 }
 
 function startMapping() {
-  var widgetSection = document.querySelector('#mc-workbench-widgetsection');
+  var widgetSection = document.querySelector('#mc-workbench-widget-section');
   if( widgetSection.className.match(/^active/) ) {
     widgetSection.className = 'inactive';
     destroyWidgetList();

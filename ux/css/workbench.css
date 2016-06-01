@@ -46,17 +46,18 @@
   display: block;
   font-size: 14px;
 }
-#mc-workbench-widgetsection.inactive {
+#mc-workbench-widget-section.inactive, #mc-workbench-widget-editor.inactive {
   display: none;
 }
-#mc-workbench-widgettitle {
+#mc-workbench-widget-title, #mc-workbench-widget-name {
   color: #435058;
   padding: 15px 5px 10px;
   border-bottom: 1px solid #70a2f9;
   font-size: 16px;
   margin-top: 10px;
+  text-transform: capitalize;
 }
-#mc-workbench-widgetlist li {
+#mc-workbench-widget-list li {
   background: white;
   color: #3E545A;
   font-size: 14px;
