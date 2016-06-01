@@ -65,24 +65,24 @@
   padding: 10px 10px 10px;
   border-bottom: 1px solid #D2CACA;
 }
-#mc-workbench-selector-section.inactive {
+#mc-workbench-selector-section.inactive, #mc-workbench-settings-section.inactive {
   display: none;
 }
-#mc-workbench-selector-title {
+#mc-workbench-selector-title, #mc-workbench-settings-title {
   font-size: 14px;
   color: #333;
   padding: 10px;
 }
-#mc-workbench-selector-container {
+#mc-workbench-selector-container, #mc-workbench-settings-container {
   padding: 0 10px;
 }
-.widget-label {
+.prop-label {
   display: block;
   font-size: 13px;
   color: #0D82A5;
   margin-bottom: 2px;
 }
-.widget-input {
+.prop-input {
   display: inline-block !important;
   width: 80% !important;
   border-radius: 2px !important;
@@ -93,7 +93,7 @@
   font-weight: normal !important;
   font-size: 11px !important;
 }
-.widget-button {
+.prop-button {
   display: inline-block;
   left: 10px;
   position: relative;

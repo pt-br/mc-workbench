@@ -198,12 +198,11 @@ function processWidgetFields(widgetResult) {
 }
 
 function buildWidgetInterface() {
-  console.log("Gonna build something");
   /* Build selectors */
   // Verify if widget has selectors
+  var selectorSection = document.querySelector('#mc-workbench-selector-section');
   if( widgetSelectors ) {
     console.log("Has selectors");
-    var selectorSection = document.querySelector('#mc-workbench-selector-section');
     var selectorContainer = document.querySelector('#mc-workbench-selector-container');
     var selectorIndex = widgetSelectors.length;
 
@@ -214,16 +213,16 @@ function buildWidgetInterface() {
       var selectorElement = document.createElement('input');
       var selectorButton = document.createElement('div');
 
-      selectorLabel.className = 'widget-label';
+      selectorLabel.className = 'prop-label';
       selectorLabel.for = widgetSelectors[i];
       selectorLabel.innerHTML = widgetSelectors[i];
 
       selectorElement.type = "text";
-      selectorElement.className = 'widget-input';
+      selectorElement.className = 'prop-input';
       selectorElement.name = widgetSelectors[i];
       selectorElement.id = widgetSelectors[i];
 
-      selectorButton.className = 'widget-button';
+      selectorButton.className = 'prop-button';
       selectorButton.setAttribute('data-prop', selectorElement.id);
       selectorButton.setAttribute('onclick', 'grabSelector()');
       selectorButton.innerHTML = 'Grab';
@@ -232,6 +231,44 @@ function buildWidgetInterface() {
       selectorContainer.appendChild(selectorElement);
       selectorContainer.appendChild(selectorButton);
     }
+  } else {
+    selectorSection.className = 'inactive';
+  }
+
+  // Verify if widget has settings
+  var settingsSection = document.querySelector('#mc-workbench-settings-section');
+  if( widgetSettings ) {
+    console.log("Has settings");
+    var settingsContainer = document.querySelector('#mc-workbench-settings-container');
+    var settingsIndex = widgetSettings.length;
+
+    settingsSection.className = 'active';
+
+    for( var i = 0; i < settingsIndex; i++ ) {
+      var settingLabel = document.createElement('label');
+      var settingElement = document.createElement('input');
+      var settingButton = document.createElement('div');
+
+      settingLabel.className = 'prop-label';
+      settingLabel.for = widgetSettings[i];
+      settingLabel.innerHTML = widgetSettings[i];
+
+      settingElement.type = "text";
+      settingElement.className = 'prop-input';
+      settingElement.name = widgetSettings[i];
+      settingElement.id = widgetSettings[i];
+
+      settingButton.className = 'prop-button';
+      settingButton.setAttribute('data-prop', settingElement.id);
+      settingButton.setAttribute('onclick', 'grabSelector()');
+      settingButton.innerHTML = 'Grab';
+
+      settingsContainer.appendChild(settingLabel);
+      settingsContainer.appendChild(settingElement);
+      settingsContainer.appendChild(settingButton);
+    }
+  } else {
+    settingsSection.className = 'inactive';
   }
 }
 
