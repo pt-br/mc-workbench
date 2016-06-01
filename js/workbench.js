@@ -124,15 +124,15 @@ function getWidgetTemplate(widgetFile) {
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
       var widgetResult = JSON.stringify(xhr.responseText.trim());
-      buildWidgetFields(widgetResult);
+      processWidgetFields(widgetResult);
     }
   }
   xhr.send();
 }
 
-function buildWidgetFields(widgetResult) {
+function processWidgetFields(widgetResult) {
   var widgetTemplate = widgetResult.match(/selectors\:\s\{(.*)\}\,/g)[0];
-  console.log(widgetTemplate);
+
   // Process selectors
   var widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
   widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
@@ -143,11 +143,25 @@ function buildWidgetFields(widgetResult) {
     currentSelector = currentSelector.replace(/\:/, '');
     widgetSelectors[currentIndex] = currentSelector;
   });
+  console.log('Widget Selectors:');
   console.log(widgetSelectors);
 
-  // Process settings
-  var widgetSettings = widgetSelectors.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
-  console.log(widgetSettings);
+  // Process settings (if widget has)
+  if( widgetTemplate.match(/settings/) ) {
+    var widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
+    widgetSettings = widgetSettings.replace(/\\n\s*/g, '');
+    widgetSettings = widgetSettings.match(/(\w*?)\:/g, '');
+
+    [].forEach.call(widgetSettings, function(currentSetting, currentIndex) {
+      currentSetting = currentSetting.replace(/\:/, '');
+      widgetSettings[currentIndex] = currentSetting;
+    });
+    console.log('Widget Settings:');
+    console.log(widgetSettings);
+  } else {
+    var widgetSettings = false;
+    console.log("Widget doesn't have settings");
+  }
 }
 
 function startWidgetEditor() {
