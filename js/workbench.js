@@ -1,24 +1,14 @@
 var body = document.body;
 workbench = document.createElement('div');
 widgets = [];
+var widgetSelectors = false;
+var widgetSettings = false;
 
 setTimeout(function() {
   initialize();
 }, 2000);
 
 function initialize() {
-
-  // var xhr = new XMLHttpRequest();
-  // xhr.open("GET", "https://localhost:8443/widgets/", true);
-  // xhr.onreadystatechange = function() {
-  //   if (xhr.readyState == 4) {
-  //     // JSON.parse does not evaluate the attacker's scripts.
-  //     var resp = JSON.stringify(xhr.responseText);
-  //     console.log(resp);
-  //   }
-  // }
-  // xhr.send();
-
   mcIframe = document.querySelector('#mc-created-iframe');
   originalBody = document.querySelector('#mc-original-body');
 
@@ -131,24 +121,29 @@ function getWidgetTemplate(widgetFile) {
 }
 
 function processWidgetFields(widgetResult) {
-  var widgetTemplate = widgetResult.match(/selectors\:\s\{(.*)\}\,/g)[0];
+  var widgetTemplate = widgetResult;
 
-  // Process selectors
-  var widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
-  widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
-  widgetSelectors = widgetSelectors.replace(/\\n\s*/g, '');
-  widgetSelectors = widgetSelectors.match(/(\w*?)\:/g, '');
+  // Process selectors (if widget has)
+  if( widgetResult.match(/selectors/) ) {
+    widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
+    widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
+    widgetSelectors = widgetSelectors.replace(/\\n\s*/g, '');
+    widgetSelectors = widgetSelectors.match(/(\w*?)\:/g, '');
 
-  [].forEach.call(widgetSelectors, function(currentSelector, currentIndex) {
-    currentSelector = currentSelector.replace(/\:/, '');
-    widgetSelectors[currentIndex] = currentSelector;
-  });
-  console.log('Widget Selectors:');
-  console.log(widgetSelectors);
+    [].forEach.call(widgetSelectors, function(currentSelector, currentIndex) {
+      currentSelector = currentSelector.replace(/\:/, '');
+      widgetSelectors[currentIndex] = currentSelector;
+    });
+    console.log('Widget Selectors:');
+    console.log(widgetSelectors);
+  } else {
+    widgetSelectors = false;
+    console.log("Widget doesn't have selectors");
+  }
 
   // Process settings (if widget has)
-  if( widgetTemplate.match(/settings/) ) {
-    var widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
+  if( widgetResult.match(/settings/) ) {
+    widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
     widgetSettings = widgetSettings.replace(/\\n\s*/g, '');
     widgetSettings = widgetSettings.match(/(\w*?)\:/g, '');
 
@@ -159,7 +154,7 @@ function processWidgetFields(widgetResult) {
     console.log('Widget Settings:');
     console.log(widgetSettings);
   } else {
-    var widgetSettings = false;
+    widgetSettings = false;
     console.log("Widget doesn't have settings");
   }
 }
