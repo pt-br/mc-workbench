@@ -6,9 +6,10 @@ setTimeout(function() {
 }, 2000);
 
 function initialize() {
-  var mcIframe = document.querySelector('#mc-created-iframe');
+  mcIframe = document.querySelector('#mc-created-iframe');
   originalBody = document.querySelector('#mc-original-body');
 
+  mcIframe.className = 'active';
   mcIframe.style.width = '33.3%';
   mcIframe.style.left = '33.3%';
   originalBody.style.width = '33.3%';
@@ -24,6 +25,20 @@ function addBodyListener() {
       var cssPath = getPath(e.target);
       processSelector(cssPath);
   });
+}
+
+function toggleMCIframe() {
+  if( mcIframe.className.match(/^active/) ) {
+    mcIframe.className = 'inactive';
+    mcIframe.style.display = 'none';
+    originalBody.style.width = '50%';
+    workbench.style.width = '50%';
+  } else {
+    mcIframe.className = 'active';
+    mcIframe.style.display = 'block';
+    originalBody.style.width = '33.3%';
+    workbench.style.width = '33.3%';
+  }
 }
 
 function toggleMenu() {
@@ -61,7 +76,7 @@ function disableActions() {
 
 function injectWorkbench() {
   workbench.id = 'mc-workbench-container';
-  workbench.innerHTML = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css"> <div id="mc-workbench-body"> <div id="mc-workbench-title">MoovCheckout Workbench <span id="mc-workbench-menu-toggle" onclick="toggleMenu()"> Hide/Show menu</span> </div> <ul id="mc-workbench-menu" class="active"> <li onclick="location.reload()"> Reload <span class="menuTip">Reloads the page</span> </li> <li onclick="disableActions()">Disable Actions <span class="menuTip">Disable anchors, buttons and inputs</span> </li> <li onclick="">Map Widget <span class="menuTip">Map a new widget</span> </li> <li onclick="">Export Widget <span class="menuTip">Exports current widget</span> </li> </ul> </div> ';
+  workbench.innerHTML = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css"> <div id="mc-workbench-body"> <div id="mc-workbench-title">MoovCheckout Workbench <span id="mc-workbench-menu-toggle" onclick="toggleMenu()"> Hide/Show menu</span> </div> <ul id="mc-workbench-menu" class="active"> <li onclick="location.reload()"> Reload <span class="menuTip">Reloads the page</span> </li> <li onclick="toggleMCIframe()">Toggle MC iFrame <span class="menuTip">Hide/Show MC iFrame</span> </li> <li onclick="disableActions()">Disable Actions <span class="menuTip">Disable anchors, buttons and inputs</span> </li> <li onclick="">Map Widget <span class="menuTip">Map a new widget</span> </li> <li onclick="">Export Widget <span class="menuTip">Exports current widget</span> </li> </ul> </div> ';
   body.appendChild(workbench);
 }
 
