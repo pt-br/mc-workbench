@@ -2,29 +2,51 @@ var body = document.body;
 var workbench = document.createElement('div');
 
 setTimeout(function() {
-  resizeMoovCheckout();
+  initialize();
 }, 2000);
 
-function resizeMoovCheckout() {
+function initialize() {
   var mcIframe = document.querySelector('#mc-created-iframe');
-  var originalBody = document.querySelector('#mc-original-body');
+  originalBody = document.querySelector('#mc-original-body');
 
   mcIframe.style.width = '33.3%';
   mcIframe.style.left = '33.3%';
   originalBody.style.width = '33.3%';
 
-  addBodyListener(originalBody);
+  addBodyListener();
   injectWorkbench();
+  disableActions();
 }
 
-function addBodyListener(originalBody) {
-
-
-
-  originalBody.addEventListener('click', function(e) {
+function addBodyListener() {
+  originalBody.addEventListener('mousedown', function(e) {
       e.preventDefault();
       var cssPath = getPath(e.target);
       processSelector(cssPath);
+  });
+}
+
+function disableActions() {
+  var element = originalBody.querySelectorAll('a, select, input, button');
+  [].forEach.call(element, function(currentElement) {
+    $(currentElement).unbind();
+    switch(currentElement.tagName.toLowerCase()) {
+      case 'a':
+        var href = currentElement.href;
+        currentElement.setAttribute('data-href', href);
+        currentElement.setAttribute('href', '');
+        currentElement.setAttribute('onclick', 'return false');
+      break;
+      case 'select':
+      // If it needs some extra implementation
+      break;
+      case 'input':
+      // If it needs some extra implementation
+      break;
+      case 'button':
+      // If it needs some extra implementation
+      break;
+    }
   });
 }
 
@@ -39,16 +61,23 @@ function injectWorkbench() {
 }
 
 function processSelector(cssPath) {
-  //cssPath = cssPath.toLowerCase();
-  //console.log(cssPath);
-  
+  // Lowercase all HTML Tags
+  cssPath = cssPath.replace(/(\s\w+)/g, replacer);
+
+  function replacer(match, tag) {
+	   return tag.toLowerCase();
+  }
+
   // Verify if we have an ID to use
   var idSelectorGroup = cssPath.split('#');
   if( idSelectorGroup.length > 1 ) {
     var idLastIndex = idSelectorGroup.length - 1;
     var idSelector = '#' + idSelectorGroup[idLastIndex];
   }
-  console.log('Your selector is: ' + idSelector);
+  // Only return a selector if doesn't match #mc-workbench-container
+  if ( !idSelector.match(/mc-workbench-container/) ) {
+    console.log('Your selector is: ' + idSelector);
+  }
 }
 
 function previousElementSibling (element) {
