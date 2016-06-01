@@ -1,5 +1,5 @@
 var body = document.body;
-var workbench = document.createElement('div');
+workbench = document.createElement('div');
 
 setTimeout(function() {
   initialize();
@@ -15,7 +15,7 @@ function initialize() {
 
   addBodyListener();
   injectWorkbench();
-  disableActions();
+  //disableActions();
 }
 
 function addBodyListener() {
@@ -24,6 +24,15 @@ function addBodyListener() {
       var cssPath = getPath(e.target);
       processSelector(cssPath);
   });
+}
+
+function toggleMenu() {
+  var menu = workbench.querySelector('#mc-workbench-menu');
+  if( menu.className.match(/^active/) ) {
+    menu.className = 'inactive';
+  } else {
+    menu.className = 'active';
+  }
 }
 
 function disableActions() {
@@ -51,16 +60,17 @@ function disableActions() {
 }
 
 function injectWorkbench() {
-  //var originalHtml = originalBody.innerHTML;
-  //var workbenchStyle = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css">';
-
   workbench.id = 'mc-workbench-container';
-  workbench.setAttribute('style', 'position: fixed;width: 33.3%;z-index: 999999;height: inherit;top: 45px;right: 0;overflow: scroll;');
-  workbench.innerHTML = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css"><div class="mc-workbench-body"></div>';
+  workbench.innerHTML = '<link rel="stylesheet" type="text/css" href="https://localhost:8443/css/workbench.css"> <div id="mc-workbench-body"> <div id="mc-workbench-title">MoovCheckout Workbench <span id="mc-workbench-menu-toggle" onclick="toggleMenu()"> Hide/Show menu</span> </div> <ul id="mc-workbench-menu" class="active"> <li onclick="location.reload()"> Reload <span class="menuTip">Reloads the page</span> </li> <li onclick="disableActions()">Disable Actions <span class="menuTip">Disable anchors, buttons and inputs</span> </li> <li onclick="">Map Widget <span class="menuTip">Map a new widget</span> </li> <li onclick="">Export Widget <span class="menuTip">Exports current widget</span> </li> </ul> </div> ';
   body.appendChild(workbench);
 }
 
 function processSelector(cssPath) {
+  // if match #mc-workbench-container, cancel the process
+  if ( cssPath.match(/mc-workbench-container/) ) {
+    return;
+  }
+
   // Lowercase all HTML Tags
   cssPath = cssPath.replace(/(\s\w+)/g, replacer);
 
@@ -74,10 +84,8 @@ function processSelector(cssPath) {
     var idLastIndex = idSelectorGroup.length - 1;
     var idSelector = '#' + idSelectorGroup[idLastIndex];
   }
-  // Only return a selector if doesn't match #mc-workbench-container
-  if ( !idSelector.match(/mc-workbench-container/) ) {
-    console.log('Your selector is: ' + idSelector);
-  }
+
+  console.log('Your selector is: ' + idSelector);
 }
 
 function previousElementSibling (element) {

@@ -1,3 +1,48 @@
 #mc-workbench-container {
- background: green;
+  position: fixed;
+  width: 33.3%;
+  z-index: 999999;
+  height: inherit;
+  top: 45px;
+  right: 0;
+  overflow: scroll;
+}
+#mc-workbench-container, #mc-workbench-body {
+  background: #DEDEDE;
+  font-family: Helvetica, Ubuntu, Arial, sans-serif;
+  cursor: pointer;
+}
+#mc-workbench-title {
+  text-align: center;
+  padding: 10px;
+  font-size: 16px;
+  background: #E8E8E8;
+  color: #676A6B;
+  font-weight: bold;
+}
+#mc-workbench-menu-toggle {
+  font-size: 12px;
+  display: block;
+  margin-top: 8px;
+}
+#mc-workbench-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+#mc-workbench-menu.inactive {
+  display: none;
+}
+#mc-workbench-menu > li {
+  background: white;
+  color: #0D82A5;
+  font-size: 18px;
+  padding: 10px 10px 10px;
+  border-bottom: 1px solid #D2CACA;
+  text-align: center;
+}
+#mc-workbench-menu .menuTip {
+  display: block;
+  font-size: 14px;
 }
