@@ -23,7 +23,6 @@ function initialize() {
 
 function addBodyListener() {
   originalBody.addEventListener('mousedown', function(e) {
-      e.preventDefault();
       var cssPath = getPath(e.target);
       processSelector(cssPath);
   });
@@ -123,7 +122,7 @@ function getWidgetTemplate(widgetFile) {
 function processWidgetFields(widgetResult) {
   var widgetTemplate = widgetResult;
 
-  // Process selectors (if widget has)
+  /* Process selectors (if widget has) */
   if( widgetResult.match(/selectors/) ) {
     widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
     widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
@@ -141,7 +140,7 @@ function processWidgetFields(widgetResult) {
     console.log("Widget doesn't have selectors");
   }
 
-  // Process settings (if widget has)
+  /* Process settings (if widget has) */
   if( widgetResult.match(/settings/) ) {
     widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
     widgetSettings = widgetSettings.replace(/\\n\s*/g, '');
@@ -156,6 +155,44 @@ function processWidgetFields(widgetResult) {
   } else {
     widgetSettings = false;
     console.log("Widget doesn't have settings");
+  }
+
+  buildWidgetInterface();
+}
+
+function buildWidgetInterface() {
+  console.log("Gonna build something");
+  /* Build selectors */
+  // Verify if widget has selectors
+  if( widgetSelectors ) {
+    console.log("Has selectors");
+    var selectorSection = document.querySelector('#mc-workbench-selector-section');
+    var selectorContainer = document.querySelector('#mc-workbench-selector-container');
+    var selectorIndex = widgetSelectors.length;
+
+    selectorSection.className = 'active';
+
+    for( var i = 0; i < selectorIndex; i++ ) {
+      var selectorLabel = document.createElement('label');
+      var selectorElement = document.createElement('input');
+      var selectorButton = document.createElement('div');
+
+      selectorLabel.className = 'widget-label';
+      selectorLabel.for = widgetSelectors[i];
+      selectorLabel.innerHTML = widgetSelectors[i];
+
+      selectorElement.type = "text";
+      selectorElement.className = 'widget-input';
+      selectorElement.name = widgetSelectors[i];
+      selectorElement.id = widgetSelectors[i];
+
+      selectorButton.className = 'widget-button';
+      selectorButton.innerHTML = 'Grab';
+
+      selectorContainer.appendChild(selectorLabel);
+      selectorContainer.appendChild(selectorElement);
+      selectorContainer.appendChild(selectorButton);
+    }
   }
 }
 

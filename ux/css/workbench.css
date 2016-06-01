@@ -64,3 +64,40 @@
   padding: 10px 10px 10px;
   border-bottom: 1px solid #D2CACA;
 }
+#mc-workbench-selector-section.inactive {
+  display: none;
+}
+#mc-workbench-selector-title {
+  font-size: 14px;
+  color: #333;
+  padding: 10px;
+}
+#mc-workbench-selector-container {
+  padding: 0 10px;
+}
+.widget-label {
+  display: block;
+  font-size: 13px;
+  color: #0D82A5;
+  margin-bottom: 2px;
+}
+.widget-input {
+  display: inline-block !important;
+  width: 80% !important;
+  border-radius: 2px !important;
+  -webkit-appearance: none !important;
+  border: 1px solid #E2DFDF !important;
+  padding: 7px !important;
+  margin-bottom: 10px !important;
+  font-weight: normal !important;
+  font-size: 11px !important;
+}
+.widget-button {
+  display: inline-block;
+  left: 10px;
+  position: relative;
+  background: #0D82A5;
+  color: white;
+  padding: 6px;
+  border-radius: 5px;
+}
