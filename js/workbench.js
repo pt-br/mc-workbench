@@ -3,6 +3,8 @@ workbench = document.createElement('div');
 widgets = [];
 var widgetSelectors = false;
 var widgetSettings = false;
+var grabbingSelector = false;
+var currentProp = false;
 
 setTimeout(function() {
   initialize();
@@ -26,6 +28,41 @@ function addBodyListener() {
       var cssPath = getPath(e.target);
       processSelector(cssPath);
   });
+}
+
+function processSelector(cssPath) {
+  // if match #mc-workbench-container, cancel the process
+  if ( cssPath.match(/mc-workbench-container/) ) {
+    return;
+  }
+
+  // Lowercase all HTML Tags
+  cssPath = cssPath.replace(/(\s\w+)/g, replacer);
+
+  function replacer(match, tag) {
+	   return tag.toLowerCase();
+  }
+
+  // Verify if we have an ID to use
+  var idSelectorGroup = cssPath.split('#');
+  if( idSelectorGroup.length > 1 ) {
+    var idLastIndex = idSelectorGroup.length - 1;
+    var idSelector = '#' + idSelectorGroup[idLastIndex];
+  }
+
+  console.log('Your selector is: ' + idSelector);
+  // Verify if we have a prop waiting for selector
+  if ( currentProp ) {
+    currentProp.value = idSelector;
+    currentProp = false;
+  }
+}
+
+function grabSelector() {
+  grabbingSelector = true;
+  var grabButton = event.target;
+  var grabProp = grabButton.getAttribute('data-prop');
+  currentProp = document.querySelector('#'+grabProp);
 }
 
 function toggleMCIframe() {
@@ -187,6 +224,8 @@ function buildWidgetInterface() {
       selectorElement.id = widgetSelectors[i];
 
       selectorButton.className = 'widget-button';
+      selectorButton.setAttribute('data-prop', selectorElement.id);
+      selectorButton.setAttribute('onclick', 'grabSelector()');
       selectorButton.innerHTML = 'Grab';
 
       selectorContainer.appendChild(selectorLabel);
@@ -211,8 +250,6 @@ function startWidgetEditor() {
   widgetEditorTitle.innerHTML = widgetName;
 
   getWidgetTemplate(widgetFile);
-
-
 }
 
 function buildWidgetList() {
@@ -255,29 +292,6 @@ function injectWorkbench() {
   getUx();
   workbench.id = 'mc-workbench-container';
   body.appendChild(workbench);
-}
-
-function processSelector(cssPath) {
-  // if match #mc-workbench-container, cancel the process
-  if ( cssPath.match(/mc-workbench-container/) ) {
-    return;
-  }
-
-  // Lowercase all HTML Tags
-  cssPath = cssPath.replace(/(\s\w+)/g, replacer);
-
-  function replacer(match, tag) {
-	   return tag.toLowerCase();
-  }
-
-  // Verify if we have an ID to use
-  var idSelectorGroup = cssPath.split('#');
-  if( idSelectorGroup.length > 1 ) {
-    var idLastIndex = idSelectorGroup.length - 1;
-    var idSelector = '#' + idSelectorGroup[idLastIndex];
-  }
-
-  console.log('Your selector is: ' + idSelector);
 }
 
 function previousElementSibling (element) {
