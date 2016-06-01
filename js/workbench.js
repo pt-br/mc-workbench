@@ -50,9 +50,9 @@ function processSelector(cssPath) {
     var idSelector = '#' + idSelectorGroup[idLastIndex];
   }
 
-  console.log('Your selector is: ' + idSelector);
   // Verify if we have a prop waiting for selector
   if ( currentProp ) {
+    console.log('Your selector is: ' + idSelector);
     currentProp.value = idSelector;
     currentProp = false;
   }
@@ -272,13 +272,22 @@ function destroyWidgetList() {
   widgetList.innerHTML = '';
 }
 
+function destroyWidgetEditor() {
+  var widgetEditor = document.querySelector('#mc-workbench-selector-container');
+  widgetEditor.innerHTML = '';
+}
+
 function startMapping() {
   var widgetSection = document.querySelector('#mc-workbench-widget-section');
+  var widgetEditor = document.querySelector('#mc-workbench-widget-editor');
   if( widgetSection.className.match(/^active/) ) {
     widgetSection.className = 'inactive';
+    widgetEditor.className = 'active';
     destroyWidgetList();
   } else {
     widgetSection.className = 'active';
+    widgetEditor.className = 'inactive';
+    destroyWidgetEditor();
     buildWidgetList();
   }
 }
