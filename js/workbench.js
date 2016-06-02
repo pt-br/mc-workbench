@@ -175,6 +175,9 @@ function processWidgetFields(widgetResult) {
     widgetSelectors = widgetSelectors.replace(/\\n\s*/g, '');
     widgetSelectors = widgetSelectors.match(/(\w*?)\:/g, '');
 
+    /* Remove first element, it's the 'name' of the widget */
+    widgetSelectors.shift();
+
     [].forEach.call(widgetSelectors, function(currentSelector, currentIndex) {
       currentSelector = currentSelector.replace(/\:/, '');
       widgetSelectors[currentIndex] = currentSelector;
@@ -191,6 +194,9 @@ function processWidgetFields(widgetResult) {
     widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
     widgetSettings = widgetSettings.replace(/\\n\s*/g, '');
     widgetSettings = widgetSettings.match(/(\w*?)\:/g, '');
+
+    /* Remove first element, it's the 'name' of the widget */
+    widgetSettings.shift();
 
     [].forEach.call(widgetSettings, function(currentSetting, currentIndex) {
       currentSetting = currentSetting.replace(/\:/, '');
