@@ -11,10 +11,10 @@ var initDelay = setInterval(function() {
   mcIframe = document.querySelector('#mc-created-iframe');
   originalBody = document.querySelector('#mc-original-body');
 
-  if( originalBody.toString().length > 0 ) {
+  if( originalBody ) {
     initialize();
   }
-  
+
 }, 200);
 
 function initialize() {
