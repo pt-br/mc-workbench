@@ -82,7 +82,7 @@
   -webkit-appearance: none !important;
   border: 1px solid #E2DFDF !important;
   padding: 7px !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 5px !important;
   font-weight: normal !important;
   font-size: 11px !important;
 }
@@ -94,6 +94,11 @@
   color: white;
   padding: 6px;
   border-radius: 5px;
+}
+.prop-tip {
+  margin-bottom: 10px;
+  color: #7A7B7B;
+  font-style: italic;
 }
 #mc-workbench-export-modal {
   position: absolute;

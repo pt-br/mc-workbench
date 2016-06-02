@@ -54,6 +54,8 @@ function processSelector(cssPath) {
   if ( currentProp ) {
     console.log('Your selector is: ' + idSelector);
     currentProp.value = idSelector;
+    var grabTip = currentProp.nextSibling.nextSibling;
+    grabTip.className = 'proptip inactive';
     currentProp = false;
   }
 }
@@ -62,6 +64,13 @@ function grabSelector() {
   grabbingSelector = true;
   var grabButton = event.target;
   var grabProp = grabButton.getAttribute('data-prop');
+  // Reset any opened tip
+  var grabTip = document.querySelector('.prop-tip.active');
+  if ( grabTip ) {
+    grabTip.className = 'proptip inactive';
+  }
+  grabTip = grabButton.nextElementSibling;
+  grabTip.className = 'prop-tip active';
   currentProp = document.querySelector('#'+grabProp);
 }
 
@@ -159,7 +168,7 @@ function getWidgetTemplate(widgetFile) {
 function processWidgetFields(widgetResult) {
   var widgetTemplate = widgetResult;
 
-  /* Process selectors (if widget has) */
+  /* Process selectors (if widget has selectors) */
   if( widgetResult.match(/selectors/) ) {
     widgetSelectors = widgetTemplate.replace(/settings.*/g, '');
     widgetSelectors = widgetSelectors.replace(/selectors:\s\{\\n\s*/g, '');
@@ -177,7 +186,7 @@ function processWidgetFields(widgetResult) {
     console.log("Widget doesn't have selectors");
   }
 
-  /* Process settings (if widget has) */
+  /* Process settings (if widget has settings) */
   if( widgetResult.match(/settings/) ) {
     widgetSettings = widgetTemplate.replace(/selectors:\s\{\\n\s*.*settings:\s\{\\n\s*/g, '');
     widgetSettings = widgetSettings.replace(/\\n\s*/g, '');
@@ -211,6 +220,7 @@ function buildWidgetInterface() {
       var selectorLabel = document.createElement('label');
       var selectorElement = document.createElement('input');
       var selectorButton = document.createElement('div');
+      var selectorTip = document.createElement('div');
 
       selectorLabel.className = 'prop-label';
       selectorLabel.for = widgetSelectors[i] + '-selector';
@@ -226,9 +236,13 @@ function buildWidgetInterface() {
       selectorButton.setAttribute('onclick', 'grabSelector()');
       selectorButton.innerHTML = 'Grab';
 
+      selectorTip.className = 'prop-tip inactive';
+      selectorTip.innerHTML = 'Now, just click on some element in the original site';
+
       selectorContainer.appendChild(selectorLabel);
       selectorContainer.appendChild(selectorElement);
       selectorContainer.appendChild(selectorButton);
+      selectorContainer.appendChild(selectorTip);
     }
   } else {
     selectorSection.className = 'inactive';
@@ -246,6 +260,7 @@ function buildWidgetInterface() {
       var settingLabel = document.createElement('label');
       var settingElement = document.createElement('input');
       var settingButton = document.createElement('div');
+      var settingTip = document.createElement('div');
 
       settingLabel.className = 'prop-label';
       settingLabel.for = widgetSettings[i] + '-setting';
@@ -261,9 +276,13 @@ function buildWidgetInterface() {
       settingButton.setAttribute('onclick', 'grabSelector()');
       settingButton.innerHTML = 'Grab';
 
+      settingTip.className = 'prop-tip inactive';
+      settingTip.innerHTML = 'Now, just click on some element in the original site';
+
       settingsContainer.appendChild(settingLabel);
       settingsContainer.appendChild(settingElement);
       settingsContainer.appendChild(settingButton);
+      settingsContainer.appendChild(settingTip);
     }
   } else {
     settingsSection.className = 'inactive';
