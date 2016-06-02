@@ -100,7 +100,14 @@
   color: #7A7B7B;
   font-style: italic;
 }
-#mc-workbench-export-modal {
+#mc-workbench-export-modal-overlay, #mc-workbench-getselector-modal-overlay {
+  position: absolute;
+  top: 0;
+  background: rgba(33, 33, 33, 0.78);
+  width: 100%;
+  height: 100%;
+}
+#mc-workbench-export-modal, #mc-workbench-getselector-modal {
   position: absolute;
   margin: auto;
   top: 68px;
@@ -111,7 +118,7 @@
   border-radius: 2px;
   border: 1px solid #D0D0D0;
 }
-#mc-workbench-export-modal-close {
+#mc-workbench-export-modal-close, #mc-workbench-getselector-modal-close {
   background: #0D82A5;
   position: absolute;
   padding: 5px 10px;
@@ -122,13 +129,13 @@
   top: -10px;
   font-size: 16px;
 }
-#mc-workbench-export-modal-title {
+#mc-workbench-export-modal-title, #mc-workbench-getselector-modal-title {
   margin: 20px 10px 0;
   color: #0D82A7;
   font-size: 16px;
   border-bottom: 1px solid #0D82A7;
 }
-#mc-workbench-export-modal-subtitle {
+#mc-workbench-export-modal-subtitle, #mc-workbench-getselector-modal-subtitle {
   margin: 10px;
   color: #555;
 }
@@ -139,10 +146,15 @@
   display: block;
   width: 95%;
 }
-#mc-workbench-export-modal-overlay {
-  position: absolute;
-  top: 0;
-  background: rgba(33, 33, 33, 0.78);
-  width: 100%;
-  height: 100%;
+#mc-workbench-getselector-modal-input {
+  display: block !important;
+  width: 95% !important;
+  border-radius: 2px !important;
+  -webkit-appearance: none !important;
+  border: 1px solid #E2DFDF !important;
+  padding: 7px !important;
+  margin: auto;
+  margin-bottom: 5px !important;
+  font-weight: normal !important;
+  font-size: 11px !important;
 }

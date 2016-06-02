@@ -4,6 +4,7 @@ widgets = [];
 var widgetSelectors = false;
 var widgetSettings = false;
 var grabbingSelector = false;
+var grabbingSimpleSelector = false;
 var currentProp = false;
 
 setTimeout(function() {
@@ -57,6 +58,13 @@ function processSelector(cssPath) {
     var grabTip = currentProp.nextSibling.nextSibling;
     grabTip.className = 'proptip inactive';
     currentProp = false;
+  }
+
+  // Verify if we have to provide a simple selector
+  if ( grabbingSimpleSelector ) {
+    console.log('Your selector is: ' + idSelector);
+    var simpleSelectorInput = document.querySelector('#mc-workbench-getselector-modal-input');
+    simpleSelectorInput.value = idSelector;
   }
 }
 
@@ -366,6 +374,22 @@ function injectWorkbench() {
   getUx();
   workbench.id = 'mc-workbench-container';
   body.appendChild(workbench);
+}
+
+function closeGetSelectorModal() {
+  var getSelectorModal = document.querySelector('#mc-workbench-getselector-modal');
+  var getSelectorModalOverlay = document.querySelector('#mc-workbench-getselector-modal-overlay');
+  getSelectorModal.className = 'inactive';
+  getSelectorModalOverlay.className = 'inactive';
+  grabbingSimpleSelector = false;
+}
+
+function openGetSelectorModal() {
+  var getSelectorModal = document.querySelector('#mc-workbench-getselector-modal');
+  var getSelectorModalOverlay = document.querySelector('#mc-workbench-getselector-modal-overlay');
+  getSelectorModal.className = 'active';
+  getSelectorModalOverlay.className = 'active';
+  grabbingSimpleSelector = true;
 }
 
 function closeExportModal() {

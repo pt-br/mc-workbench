@@ -12,6 +12,9 @@
     <li onclick="disableActions()">Disable Actions
       <span class="menuTip">Disable anchors, buttons and inputs</span>
     </li>
+    <li onclick="openGetSelectorModal()">Get Selector
+      <span class="menuTip">Simply gets a selector</span>
+    </li>
     <li onclick="startMapping()">Map Widget
       <span class="menuTip">Map a new widget</span>
     </li>
@@ -49,7 +52,7 @@
     <div id="mc-workbench-export-modal-close" onclick="closeExportModal()">x</div>
     <div id="mc-workbench-export-modal-title">Here is your widget</div>
     <div id="mc-workbench-export-modal-subtitle">
-      <span>Just click the box below, then copy it.</span>
+      <span>Just click on the box below, then copy it.</span>
       <br>
       <span>Don't worry about tabs, it's already formated.</span>
     </div>
@@ -57,4 +60,16 @@
       <!-- Widget template will be loaded here - DON'T CODE ANYTHING HERE -->
     </textarea>
   </div>
+</div>
+<div id="mc-workbench-getselector-modal-overlay" class="inactive">
+<div id="mc-workbench-getselector-modal" class="inactive">
+  <div id="mc-workbench-getselector-modal-close" onclick="closeGetSelectorModal()">x</div>
+  <div id="mc-workbench-getselector-modal-title">Get selector</div>
+  <div id="mc-workbench-getselector-modal-subtitle">
+    <span>Just click on any element of the original site</span>
+    <br>
+    <span>Then click on the box below and copy it.</span>
+  </div>
+  <input type="text" id="mc-workbench-getselector-modal-input" onclick="this.focus();this.select()" readonly="readonly">
+</div>
 </div>
