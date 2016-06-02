@@ -343,14 +343,17 @@ function injectWorkbench() {
 
 function closeExportModal() {
   var exportModal = document.querySelector('#mc-workbench-export-modal');
+  var exportModalOverlay = document.querySelector('#mc-workbench-export-modal-overlay');
   exportModal.className = 'inactive';
+  exportModalOverlay.className = 'inactive';
 }
 
 function openExportModal(schema) {
   var exportModal = document.querySelector('#mc-workbench-export-modal');
+  var exportModalOverlay = document.querySelector('#mc-workbench-export-modal-overlay');
   var exportBox = document.querySelector('#mc-workbench-export-modal-box');
-  //manageTextAreaSize();
   exportModal.className = 'active';
+  exportModalOverlay.className = 'active';
   exportBox.value = schema;
 
   exportBox.style.height = 'auto';
