@@ -100,16 +100,18 @@ function toggleMenu() {
 function disableActions() {
   var element = originalBody.querySelectorAll('a, select, input, button');
   [].forEach.call(element, function(currentElement) {
+
     $(currentElement).unbind();
+    currentElement.setAttribute('onclick', 'return false');
+
     switch(currentElement.tagName.toLowerCase()) {
       case 'a':
         var href = currentElement.href;
         currentElement.setAttribute('data-href', href);
         currentElement.setAttribute('href', '');
-        currentElement.setAttribute('onclick', 'return false');
       break;
       case 'select':
-      // If it needs some extra implementation
+        currentElement.innerHTML = '';
       break;
       case 'input':
       // If it needs some extra implementation
