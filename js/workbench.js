@@ -9,7 +9,7 @@ var currentProp = false;
 
 setTimeout(function() {
   initialize();
-}, 2000);
+}, 200);
 
 function initialize() {
   mcIframe = document.querySelector('#mc-created-iframe');
