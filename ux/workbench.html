@@ -47,21 +47,20 @@
       </div>
     </div>
   </div>
-  <div id="mc-workbench-export-modal-overlay" class="inactive">
+  <div id="mc-workbench-export-modal-overlay" class="inactive" onclick="closeExportModal()"></div>
   <div id="mc-workbench-export-modal" class="inactive">
-    <div id="mc-workbench-export-modal-close" onclick="closeExportModal()">x</div>
-    <div id="mc-workbench-export-modal-title">Here is your widget</div>
-    <div id="mc-workbench-export-modal-subtitle">
-      <span>Just click on the box below, then copy it.</span>
-      <br>
-      <span>Don't worry about tabs, it's already formated.</span>
-    </div>
-    <textarea onclick="this.focus();this.select()" readonly="readonly" id="mc-workbench-export-modal-box">
-      <!-- Widget template will be loaded here - DON'T CODE ANYTHING HERE -->
-    </textarea>
+  <div id="mc-workbench-export-modal-close" onclick="closeExportModal()">x</div>
+  <div id="mc-workbench-export-modal-title">Here is your widget</div>
+  <div id="mc-workbench-export-modal-subtitle">
+    <span>Just click on the box below, then copy it.</span>
+    <br>
+    <span>Don't worry about tabs, it's already formated.</span>
   </div>
-</div>
-<div id="mc-workbench-getselector-modal-overlay" class="inactive">
+  <textarea onclick="this.focus();this.select()" readonly="readonly" id="mc-workbench-export-modal-box">
+    <!-- Widget template will be loaded here - DON'T CODE ANYTHING HERE -->
+  </textarea>
+  </div>
+<div id="mc-workbench-getselector-modal-overlay" class="inactive" onclick="closeGetSelectorModal()"></div>
 <div id="mc-workbench-getselector-modal" class="inactive">
   <div id="mc-workbench-getselector-modal-close" onclick="closeGetSelectorModal()">x</div>
   <div id="mc-workbench-getselector-modal-title">Get selector</div>
@@ -71,5 +70,4 @@
     <span>Then click on the box below and copy it.</span>
   </div>
   <input type="text" id="mc-workbench-getselector-modal-input" onclick="this.focus();this.select()" readonly="readonly">
-</div>
 </div>
