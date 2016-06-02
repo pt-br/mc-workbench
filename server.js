@@ -27,10 +27,12 @@ app.use(function(req, res, next) {
  *
  * Path to the moovcheckout research
  *
- * Change this path to match your moovcheckout-research repository
+ * Change this path to match your moovcheckout-research repository.
+ * e.g. /home/lucas/MyProjects/moovcheckout-research/
  */
-var widgetListBasePath = '/home/lucas/Github/moovcheckout-research/';
-// Output folder
+var widgetListBasePath = '/home/YOUR_USER_HERE/MyProjects/moovcheckout-research/';
+
+// Output folder - DON'T change this
 var outputFolder = 'widgets/';
 // Output path
 var outputPath = outputFolder
