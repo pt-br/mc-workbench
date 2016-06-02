@@ -271,7 +271,6 @@ function buildWidgetInterface() {
 }
 
 function startWidgetEditor() {
-  //destroyWidgetEditor();
   var widgetElement = event.target;
   var widgetName = event.target.innerHTML;
   var widgetFile = event.target.getAttribute('data-file');
@@ -318,14 +317,15 @@ function destroyWidgetEditor() {
 function startMapping() {
   var widgetSection = document.querySelector('#mc-workbench-widget-section');
   var widgetEditor = document.querySelector('#mc-workbench-widget-editor');
+
+  widgetEditor.className = 'inactive';
+  destroyWidgetEditor();
+
   if( widgetSection.className.match(/^active/) ) {
     widgetSection.className = 'inactive';
-    widgetEditor.className = 'active';
     destroyWidgetList();
   } else {
     widgetSection.className = 'active';
-    widgetEditor.className = 'inactive';
-    destroyWidgetEditor();
     buildWidgetList();
   }
 }
@@ -339,6 +339,23 @@ function injectWorkbench() {
   getUx();
   workbench.id = 'mc-workbench-container';
   body.appendChild(workbench);
+}
+
+function closeExportModal() {
+  var exportModal = document.querySelector('#mc-workbench-export-modal');
+  exportModal.className = 'inactive';
+}
+
+function openExportModal(schema) {
+  var exportModal = document.querySelector('#mc-workbench-export-modal');
+  var exportBox = document.querySelector('#mc-workbench-export-modal-box');
+  //manageTextAreaSize();
+  exportModal.className = 'active';
+  exportBox.value = schema;
+
+  exportBox.style.height = 'auto';
+  var newHeight = exportBox.scrollHeight + 6;
+  exportBox.style.height = newHeight+'px';
 }
 
 function exportSchema() {
@@ -364,6 +381,7 @@ function exportSchema() {
     });
 
     var schema = buildSchema(selectorProps, settingProps);
+    openExportModal(schema);
 
   } else {
     alert('You don\'t have any active widget to export');
@@ -374,9 +392,6 @@ function buildSchema(selectorProps, settingProps) {
   var widgetName = document.querySelector('#mc-workbench-widget-name').innerHTML;
   var schemaString = '{' +
                      '\n\t\tname: \'' + widgetName + '\',';
-
-  console.log('selector props vazio abaixo');
-  console.log(selectorProps.length);
 
   /* If widget has selectors */
   if(selectorProps.length > 0) {
@@ -421,7 +436,7 @@ function buildSchema(selectorProps, settingProps) {
   var endString = '\n\t},';
 
   schemaString = schemaString.concat(endString);
-  console.log(schemaString);
+  return schemaString;
 }
 
 function previousElementSibling (element) {
