@@ -202,7 +202,6 @@ function buildWidgetInterface() {
   // Verify if widget has selectors
   var selectorSection = document.querySelector('#mc-workbench-selector-section');
   if( widgetSelectors ) {
-    console.log("Has selectors");
     var selectorContainer = document.querySelector('#mc-workbench-selector-container');
     var selectorIndex = widgetSelectors.length;
 
@@ -214,13 +213,13 @@ function buildWidgetInterface() {
       var selectorButton = document.createElement('div');
 
       selectorLabel.className = 'prop-label';
-      selectorLabel.for = widgetSelectors[i];
+      selectorLabel.for = widgetSelectors[i] + '-selector';
       selectorLabel.innerHTML = widgetSelectors[i];
 
       selectorElement.type = "text";
       selectorElement.className = 'prop-input';
       selectorElement.name = widgetSelectors[i];
-      selectorElement.id = widgetSelectors[i];
+      selectorElement.id = widgetSelectors[i] + '-selector';
 
       selectorButton.className = 'prop-button';
       selectorButton.setAttribute('data-prop', selectorElement.id);
@@ -238,7 +237,6 @@ function buildWidgetInterface() {
   // Verify if widget has settings
   var settingsSection = document.querySelector('#mc-workbench-settings-section');
   if( widgetSettings ) {
-    console.log("Has settings");
     var settingsContainer = document.querySelector('#mc-workbench-settings-container');
     var settingsIndex = widgetSettings.length;
 
@@ -250,13 +248,13 @@ function buildWidgetInterface() {
       var settingButton = document.createElement('div');
 
       settingLabel.className = 'prop-label';
-      settingLabel.for = widgetSettings[i];
+      settingLabel.for = widgetSettings[i] + '-setting';
       settingLabel.innerHTML = widgetSettings[i];
 
       settingElement.type = "text";
       settingElement.className = 'prop-input';
       settingElement.name = widgetSettings[i];
-      settingElement.id = widgetSettings[i];
+      settingElement.id = widgetSettings[i] + '-setting';
 
       settingButton.className = 'prop-button';
       settingButton.setAttribute('data-prop', settingElement.id);
@@ -273,6 +271,7 @@ function buildWidgetInterface() {
 }
 
 function startWidgetEditor() {
+  //destroyWidgetEditor();
   var widgetElement = event.target;
   var widgetName = event.target.innerHTML;
   var widgetFile = event.target.getAttribute('data-file');
@@ -310,8 +309,10 @@ function destroyWidgetList() {
 }
 
 function destroyWidgetEditor() {
-  var widgetEditor = document.querySelector('#mc-workbench-selector-container');
-  widgetEditor.innerHTML = '';
+  var widgetEditorSelector = document.querySelector('#mc-workbench-selector-container');
+  var widgetEditorSettings = document.querySelector('#mc-workbench-settings-container');
+  widgetEditorSelector.innerHTML = '';
+  widgetEditorSettings.innerHTML = '';
 }
 
 function startMapping() {
@@ -338,6 +339,89 @@ function injectWorkbench() {
   getUx();
   workbench.id = 'mc-workbench-container';
   body.appendChild(workbench);
+}
+
+function exportSchema() {
+  /* Verify if we have any active widget to export */
+  if ( widgetSelectors || widgetSettings ) {
+    var selectorInputs = document.querySelectorAll('#mc-workbench-selector-container > .prop-input');
+    var settingInputs = document.querySelectorAll('#mc-workbench-settings-container > .prop-input');
+    var selectorProps = [];
+    var settingProps = [];
+
+    [].forEach.call(selectorInputs, function(currentInput) {
+      /* Check if it's not empty */
+      if ( currentInput.value != '' ) {
+        selectorProps.push(currentInput.id);
+      }
+    });
+
+    [].forEach.call(settingInputs, function(currentInput) {
+      /* Check if it's not empty */
+      if ( currentInput.value != '' ) {
+        settingProps.push(currentInput.id);
+      }
+    });
+
+    var schema = buildSchema(selectorProps, settingProps);
+
+  } else {
+    alert('You don\'t have any active widget to export');
+  }
+}
+
+function buildSchema(selectorProps, settingProps) {
+  var widgetName = document.querySelector('#mc-workbench-widget-name').innerHTML;
+  var schemaString = '{' +
+                     '\n\t\tname: \'' + widgetName + '\',';
+
+  console.log('selector props vazio abaixo');
+  console.log(selectorProps.length);
+
+  /* If widget has selectors */
+  if(selectorProps.length > 0) {
+    var selectorsString = '\n\t\tselectors: {';
+
+    schemaString = schemaString.concat(selectorsString);
+
+    [].forEach.call(selectorProps, function(currentProp) {
+      var currentPropElement = document.querySelector('#mc-workbench-selector-container > #' + currentProp);
+      var propName = currentPropElement.name;
+      var propValue = currentPropElement.value;
+
+      var propString = '\n\t\t\t' + propName + ': ' + '\'' + propValue + '\',';
+
+      schemaString = schemaString.concat(propString);
+    });
+
+    var closeSelectorsString = '\n\t\t},';
+    schemaString = schemaString.concat(closeSelectorsString);
+  }
+
+  /* If widget has settings */
+  if(settingProps.length > 0) {
+  var settingsString = '\n\t\tsettings: {';
+
+  schemaString = schemaString.concat(settingsString);
+
+  [].forEach.call(settingProps, function(currentProp) {
+    var currentPropElement = document.querySelector('#mc-workbench-settings-container > #' + currentProp);
+    var propName = currentPropElement.name;
+    var propValue = currentPropElement.value;
+
+    var propString = '\n\t\t\t' + propName + ': ' + '\'' + propValue + '\',';
+
+    schemaString = schemaString.concat(propString);
+  });
+
+  var closeSettingsString = '\n\t\t},';
+  schemaString = schemaString.concat(closeSettingsString);
+  }
+
+  var endString = '\n\t},';
+
+  schemaString = schemaString.concat(endString);
+  console.log(schemaString);
 }
 
 function previousElementSibling (element) {
