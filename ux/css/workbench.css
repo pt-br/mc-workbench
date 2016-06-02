@@ -47,6 +47,9 @@
   display: block;
   font-size: 14px;
 }
+#mc-workbench-widget-editor {
+  padding-bottom: 50px;
+}
 #mc-workbench-widget-title, #mc-workbench-widget-name {
   color: #435058;
   padding: 15px 5px 10px;
