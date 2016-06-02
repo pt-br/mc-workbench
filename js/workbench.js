@@ -7,13 +7,19 @@ var grabbingSelector = false;
 var grabbingSimpleSelector = false;
 var currentProp = false;
 
-setTimeout(function() {
-  initialize();
+var initDelay = setInterval(function() {
+  mcIframe = document.querySelector('#mc-created-iframe');
+  originalBody = document.querySelector('#mc-original-body');
+
+  if( originalBody.toString().length > 0 ) {
+    initialize();
+  }
+  
 }, 200);
 
 function initialize() {
-  mcIframe = document.querySelector('#mc-created-iframe');
-  originalBody = document.querySelector('#mc-original-body');
+
+  clearInterval(initDelay);
 
   mcIframe.className = 'active';
   mcIframe.style.width = '33.3%';
