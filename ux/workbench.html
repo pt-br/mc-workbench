@@ -1,38 +1,92 @@
+<link rel="stylesheet" type="text/css" href="https://localhost:8443/ux/css/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="https://localhost:8443/ux/css/workbench.css">
 <div id="mc-workbench-body">
-  <div id="mc-workbench-title">MoovCheckout Workbench <span id="mc-workbench-menu-toggle" onclick="toggleMenu()"> Hide/Show menu</span> </div>
-  <ul id="mc-workbench-menu" class="active">
+  <div id="mc-workbench-title">MoovCheckout Workbench</div>
+  <ul id="mc-workbench-menu">
     <li onclick="location.reload()">
-      Reload
-      <span class="menuTip">Reloads the page</span>
+      <div class="mc-workbench-menu-text">
+        <i class="fa fa-refresh mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">Reload Page</span>
+      </div>
     </li>
-    <li onclick="toggleMCIframe()">Toggle MC iFrame
-      <span class="menuTip">Hide/Show MC iFrame</span>
+    <li onclick="toggleMCIframe()">
+      <div class="mc-workbench-menu-text">
+        <i class="fa fa-caret-square-o-left mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">MC iFrame</span>
+      </div>
     </li>
-    <li onclick="disableActions()">Disable Actions
-      <span class="menuTip">Disable anchors, buttons and inputs</span>
+    <li onclick="disableActions()">
+      <div id="mc-workbench-disable-actions" class="mc-workbench-menu-text">
+        <i class="fa fa-minus-circle mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">Disable Actions</span>
+      </div>
     </li>
-    <li onclick="openGetSelectorModal()">Get Selector
-      <span class="menuTip">Simply gets a selector</span>
+    <li onclick="openGetSelectorModal()">
+      <div class="mc-workbench-menu-text">
+        <i class="fa fa-code mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">Get Selector</span>
+      </div>
     </li>
-    <li onclick="startMapping()">Map Widget
-      <span class="menuTip">Map a new widget</span>
+    <li onclick="startMapping()">
+      <div class="mc-workbench-menu-text">
+        <i class="fa fa-file-code-o mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">Map Widget</span>
+      </div>
     </li>
-    <li onclick="exportSchema()">Export Widget
-      <span class="menuTip">Exports current widget</span>
+    <li onclick="exportSchema()">
+      <div class="mc-workbench-menu-text">
+        <i class="fa fa-save mc-workbench-menu-icon"></i>
+        <span class="mc-workbench-menu-tip">Export Widget</span>
+      </div>
     </li>
   </ul>
   <div id="mc-workbench-workspace">
+    <div id="mc-workbench-initial-view" class="active">
+      <div id="mc-workbench-initial-box">
+        <i id="mc-workbench-initial-icon" class="fa fa-home"></i>
+        <div id="mc-workbench-initial-text">
+          Choose an option above to start working
+        </div>
+      </div>
+    </div>
     <div id="mc-workbench-widget-section" class="inactive">
-      <div id="mc-workbench-widget-title">Choose a widget</div>
+      <div id="mc-workbench-widget-title">Pick a Widget</div>
+      <input id="mc-workbench-widget-search" placeholder="Search Widget">
       <ul id="mc-workbench-widget-list">
-        <!-- Widget list will be loaded here - DON'T CODE ANYTHING HERE -->
+
       </ul>
     </div>
     <div id="mc-workbench-widget-editor" class="inactive">
-      <div id="mc-workbench-widget-name"></div>
+      <div id="mc-workbench-widget-name">
+        <!-- Widget name will be loaded here - DON'T CODE ANYTHING HERE -->
+      </div>
+      <input id="mc-workbench-prop-search" placeholder="Search Property">
       <div id="mc-workbench-widget-stage">
         <div id="mc-workbench-selector-section" class="inactive">
+          <div id="mc-workbench-selector-is-modal-container" class="checkbox-container">
+            <input type="checkbox" id="mc-workbench-selector-is-modal" onclick="isModal(this)">
+            <label id="mc-workbench-selector-is-modal-label"for="mc-workbench-selector-is-modal" class="checkbox-label">
+              is Modal
+            </label>
+          </div>
+          <div id="mc-workbench-selector-common-selectors-container" class="checkbox-container">
+            <input type="checkbox" id="mc-workbench-selector-common-selectors" onclick="commonProps(this)">
+            <label id="mc-workbench-selector-common-selectors-label"for="mc-workbench-selector-common-selectors" class="checkbox-label">
+              common Properties
+            </label>
+          </div>
+          <div id="mc-workbench-selector-only-mapped-container" class="checkbox-container">
+            <input type="checkbox" id="mc-workbench-selector-only-mapped" onclick="showOnlyMapped(this)">
+            <label id="mc-workbench-selector-only-mapped-label"for="mc-workbench-selector-only-mapped" class="checkbox-label">
+              only Mapped
+            </label>
+          </div>
+          <div id="mc-workbench-selector-only-error-container" class="checkbox-container">
+            <input type="checkbox" id="mc-workbench-selector-only-error" onclick="showOnlyError(this)">
+            <label id="mc-workbench-selector-only-error-label"for="mc-workbench-selector-only-error" class="checkbox-label">
+              only Error fields
+            </label>
+          </div>
           <div id="mc-workbench-selector-title">Selectors</div>
           <div id="mc-workbench-selector-container">
             <!-- Widget selectors will be loaded here - DON'T CODE ANYTHING HERE -->
@@ -50,24 +104,34 @@
   <div id="mc-workbench-export-modal-overlay" class="inactive" onclick="closeExportModal()"></div>
   <div id="mc-workbench-export-modal" class="inactive">
   <div id="mc-workbench-export-modal-close" onclick="closeExportModal()">x</div>
-  <div id="mc-workbench-export-modal-title">Here is your widget</div>
+  <div id="mc-workbench-export-modal-title">Here is your Widget</div>
+  <div id="mc-workbench-selector-only-fields-container" class="checkbox-container">
+    <input type="checkbox" id="mc-workbench-selector-only-fields" onclick="exportOnlyFields(this)">
+    <label id="mc-workbench-selector-only-fields-label"for="mc-workbench-selector-only-fields" class="checkbox-label">
+      only Fields
+    </label>
+  </div>
   <div id="mc-workbench-export-modal-subtitle">
-    <span>Just click on the box below, then copy it.</span>
-    <br>
     <span>Don't worry about tabs, it's already formated.</span>
   </div>
-  <textarea onclick="this.focus();this.select()" readonly="readonly" id="mc-workbench-export-modal-box">
+  <textarea readonly="readonly" id="mc-workbench-export-modal-box">
     <!-- Widget template will be loaded here - DON'T CODE ANYTHING HERE -->
   </textarea>
+  <div id="mc-workbench-export-modal-button" onclick="copyWidgetToClipboard()">Copy to Clipboard</div>
+  <div id="mc-workbench-export-modal-status">
+    <!-- Copy confirmation message will be loaded here - DON'T CODE ANYTHING HERE -->
+  </div>
   </div>
 <div id="mc-workbench-getselector-modal-overlay" class="inactive" onclick="closeGetSelectorModal()"></div>
 <div id="mc-workbench-getselector-modal" class="inactive">
   <div id="mc-workbench-getselector-modal-close" onclick="closeGetSelectorModal()">x</div>
-  <div id="mc-workbench-getselector-modal-title">Get selector</div>
+  <div id="mc-workbench-getselector-modal-title">Selector Picker</div>
   <div id="mc-workbench-getselector-modal-subtitle">
-    <span>Just click on any element of the original site</span>
-    <br>
-    <span>Then click on the box below and copy it.</span>
+    <span class="mc-workbench-modal-subtitle-text">Just click on any element of the original site</span>
   </div>
-  <input type="text" id="mc-workbench-getselector-modal-input" onclick="this.focus();this.select()" readonly="readonly">
+  <input type="text" id="mc-workbench-getselector-modal-input" readonly="readonly">
+  <div id="mc-workbench-getselector-modal-button" onclick="copySelectorToClipboard()">Copy to Clipboard</div>
+  <div id="mc-workbench-getselector-modal-status">
+    <!-- Copy confirmation message will be loaded here - DON'T CODE ANYTHING HERE -->
+  </div>
 </div>
