@@ -21,7 +21,7 @@ Dependencies
 ---
 To use Workbench, you'll need the following tools:
  - [Node.js](http://www.liquidweb.com/kb/how-to-install-node-js-via-nvm-node-version-manager-on-ubuntu-14-04-lts/)
- - [MoovCheckout Script Loader](https://github.com/intelimen/moovweb/tree/moovcheckout/tools/mc-loader)
+ - [MoovCheckout Script Loader](https://github.com/pt-br/mc-loader)
  - Permission to clone [moovcheckout-research](https://github.com/moovweb/moovcheckout-research) repository.
 
 Installation
@@ -54,7 +54,7 @@ Using the Workbench
 
 - Start your `dev-server` from MoovCheckout normally.
 
-- Open [MoovCheckout Script Loader](https://github.com/intelimen/moovweb/tree/moovcheckout/tools/mc-loader) on your browser and active the option 'Inject Workbench'.
+- Open [MoovCheckout Script Loader](https://github.com/pt-br/mc-loader) on your browser and active the option 'Inject Workbench'.
 
 - If you are having troubles to see the Workbench, check the `console` logs and be sure to accept the `SSL certificate`.
 
