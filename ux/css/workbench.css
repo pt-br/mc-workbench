@@ -64,9 +64,15 @@
 ::-webkit-scrollbar {
     width: 0px;
 }
+::-webkit-input-placeholder {
+   color: #9E9A9A !important;
+}
 @font-face {
     font-family: delFontRegular;
     src: url('./../fonts/Delicious-Roman.otf');
+}
+#mc-workbench-container * {
+  box-sizing: border-box !important;
 }
 #mc-workbench-container {
   position: fixed;
@@ -77,6 +83,7 @@
   right: 0;
   overflow-y: scroll;
   border-left: 1px solid #D0D0D0;
+  text-align: left;
 }
 #mc-workbench-body {
 	height: 100%;
@@ -189,6 +196,7 @@
   color: #6F6E6E !important;
   font-style: italic;
   border-bottom: 1px solid #DEDEDE;
+  font-family: Arial !important;
 }
 #mc-workbench-widget-list li {
   background: white;
@@ -220,6 +228,7 @@
 #mc-workbench-container .mc-workbench-prop-input {
   display: inline-block;
   width: 100%;
+  height: 35px;
   border-radius: 2px;
   -webkit-appearance: none;
   border: 1px solid #C1C1C1;
@@ -241,6 +250,7 @@
   padding: 7px;
   font-size: 18px;
   text-align: center;
+  vertical-align: top;
 }
 #mc-workbench-container .mc-workbench-prop-button.selected {
 	background: #024456;
@@ -286,15 +296,18 @@
   border: 1px solid #D0D0D0;
 }
 #mc-workbench-export-modal-close, #mc-workbench-getselector-modal-close {
-	background: #0D82A5;
+  background: #0D82A5;
   position: absolute;
-  padding: 5px 10px;
   color: white;
   font-weight: bold;
   border-radius: 15px;
+  height: 30px;
+  width: 30px;
   right: -8px;
   top: -10px;
   font-size: 21px;
+  text-align: center;
+  line-height: 30px;
 }
 #mc-workbench-export-modal-title, #mc-workbench-getselector-modal-title {
 	margin: 20px 10px 0;
