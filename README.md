@@ -9,6 +9,8 @@ What is this tool?
 ---
 Workbench is an UI tool to work on [MoovCheckout](http://www.moovweb.com/moovcheckout/).
 
+Feel free to check out some [Screenshots](http://imgur.com/a/cqV6W).
+
 Features
 ---
 - Disable Actions from original site (Disable <a>, inputs and buttons)
