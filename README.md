@@ -40,6 +40,11 @@ Installation
 
 - Open the folder you cloned [MoovCheckout Workbench](https://github.com/pt-br/mc-workbench) on a terminal and run
 `npm install`
+
+- Once your `server.js` is modified to track your [moovcheckout-research](https://github.com/moovweb/moovcheckout-research) local repository, be sure to mark it as `assume-unchanged`, so, git will "ignore" your change to `server.js`. To set this configuration, just run:
+
+`git update-index --assume-unchanged server.js` (on mc-workbench folder)
+
 - Done!
 
 Using the Workbench
@@ -52,6 +57,14 @@ Using the Workbench
 - Open [MoovCheckout Script Loader](https://github.com/intelimen/moovweb/tree/moovcheckout/tools/mc-loader) on your browser and active the option 'Inject Workbench'.
 
 - If you are having troubles to see the Workbench, check the `console` logs and be sure to accept the `SSL certificate`.
+
+Developing new Features
+---
+When developing new features, be aware to create a new branch. When the feature is ready, open a pull request to `moovcheckout` branch.
+
+If you need to make some improvement to `server.js`, just undo the `assume-unchanged` configuration by running:
+
+`git update-index --no-assume-unchanged server.js`
 
 
 
