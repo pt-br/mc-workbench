@@ -188,14 +188,14 @@
 	text-align: center;
 }
 #mc-workbench-widget-search, #mc-workbench-prop-search {
-	width: 100%;
-  margin-top: 10px;
-  padding: 10px;
-  border: 0;
-  font-size: 16px;
+	width: 100% !important;
+  margin-top: 10px !important;
+  padding: 10px !important;
+  border: 0 !important;
+  font-size: 16px !important;
   color: #6F6E6E !important;
-  font-style: italic;
-  border-bottom: 1px solid #DEDEDE;
+  font-style: italic !important;
+  border-bottom: 1px solid #DEDEDE !important;
   font-family: Arial !important;
 }
 #mc-workbench-widget-list li {
@@ -203,6 +203,7 @@
   color: #007C9E;
   padding: 10px 10px 10px;
   border-bottom: 1px solid #D2CACA;
+  font-size: 16px !important;
 }
 #mc-workbench-selector-title, #mc-workbench-settings-title {
   font-size: 18px;
@@ -218,6 +219,7 @@
   text-align: left;
   color: #0D82A5;
   margin-bottom: 2px;
+  font-size: 16px !important;
 }
 #mc-workbench-container .mc-workbench-prop-label[data-extra-type="modal"] {
   color: #0C8406;
@@ -227,17 +229,17 @@
 }
 #mc-workbench-container .mc-workbench-prop-input {
   display: inline-block;
-  width: 100%;
-  height: 35px;
-  border-radius: 2px;
-  -webkit-appearance: none;
-  border: 1px solid #C1C1C1;
-  padding: 7px;
-  padding-right: 60px;
-  margin-bottom: 20px;
-  font-weight: normal;
-  font-size: 14px;
-  vertical-align: inherit;
+  width: 100% !important;
+  height: 35px !important;
+  border-radius: 2px !important;
+  -webkit-appearance: none !important;
+  border: 1px solid #C1C1C1 !important;
+  padding: 7px !important;
+  padding-right: 60px !important;
+  margin-bottom: 20px !important;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  vertical-align: inherit !important;
 }
 #mc-workbench-container .mc-workbench-prop-button {
 	display: inline-block;
@@ -319,6 +321,7 @@
 #mc-workbench-export-modal-subtitle, #mc-workbench-getselector-modal-subtitle {
   margin: 10px;
   color: #555;
+  font-size: 16px !important;
 }
 #mc-workbench-export-modal-box {
   resize: none !important;
@@ -363,10 +366,11 @@
   margin-bottom: 15px !important;
   display: block !important;
   width: 95% !important;
-  text-align: center;
-  padding: 10px;
-  background: #0D82A5;
-  color: white;
+  text-align: center !important;
+  padding: 10px !important;
+  background: #0D82A5 !important;
+  color: white !important;
+  font-size: 16px !important;
 }
 #mc-workbench-export-modal-status, #mc-workbench-getselector-modal-status {
 	color: #027502;
