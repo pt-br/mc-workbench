@@ -121,6 +121,9 @@
   font-size: 14px;
   color: #333;
 }
+#mc-workbench-container .checkbox-label:before {
+  display: none !important;
+}
 #mc-workbench-container .checkbox-container {
   padding: 10px;
 	display: inline-block;
