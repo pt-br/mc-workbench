@@ -36,6 +36,7 @@
 	quotes: none;
 }
 #mc-workbench-container blockquote:before, #mc-workbench-container blockquote:after,
+#mc-workbench-container input:before, #mc-workbench-container input:after,
 #mc-workbench-container q:before, #mc-workbench-container q:after {
 	content: '';
 	content: none;
@@ -109,9 +110,10 @@
 #mc-workbench-container input[type="checkbox"] {
   top: 2px;
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 24px!important;
+  height: 24px!important;
   display: inline-block;
+  -webkit-appearance: checkbox !important;
 }
 #mc-workbench-container .checkbox-label {
   position: relative;
