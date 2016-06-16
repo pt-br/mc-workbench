@@ -114,8 +114,15 @@ function addListeners() {
     var element = e.target;
 
     /* if match some workbench element, cancel the process */
-    if ( element.id.match(/mc\-workbench/) || element.className.match(/mc\-workbench/) ) {
-      return;
+    if( element.id ) {
+      if ( element.id.match(/mc\-workbench/) ) {
+        return;
+      }
+    }
+    if( element.getAttribute('class') ) {
+      if ( element.className.match(/mc\-workbench/) ) {
+        return;
+      }
     }
 
     var selector = selectorGenerator.getSelector(element);
