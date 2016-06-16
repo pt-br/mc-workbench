@@ -87,19 +87,19 @@
   height: inherit;
   top: 0;
   right: 0;
-  overflow-y: scroll;
   border-left: 1px solid #D0D0D0;
   text-align: left;
 }
 #mc-workbench-body {
 	height: 100%;
-  overflow: auto;
 }
 #mc-workbench-container, #mc-workbench-body {
   background: #fff;
 	font-family: delFontRegular;
   cursor: pointer;
 	font-size: 16px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 #mc-workbench-container div, #mc-workbench-container input[type="text"],
 #mc-workbench-container textarea {
